@@ -180,8 +180,8 @@ INPUT3 ENUM_IDATA_SOURCE_TYPE Meta_Oscillator_Switch_Indi_VOL_SourceType = IDATA
 
 // Structs.
 // Defines struct with default user strategy values.
-struct Stg_Meta_Oscillator_Switch_Params_Defaults : StgParams {
-  Stg_Meta_Oscillator_Switch_Params_Defaults()
+struct Stg_Meta_Signal_Switch_Params_Defaults : StgParams {
+  Stg_Meta_Signal_Switch_Params_Defaults()
       : StgParams(::Meta_Oscillator_Switch_SignalOpenMethod, ::Meta_Oscillator_Switch_SignalOpenSwitchMethod,
                   ::Meta_Oscillator_Switch_SignalOpenLevel, ::Meta_Oscillator_Switch_SignalOpenBoostMethod,
                   ::Meta_Oscillator_Switch_SignalCloseMethod, ::Meta_Oscillator_Switch_SignalCloseSwitch,
@@ -196,22 +196,22 @@ struct Stg_Meta_Oscillator_Switch_Params_Defaults : StgParams {
   }
 };
 
-class Stg_Meta_Oscillator_Switch : public Strategy {
+class Stg_Meta_Signal_Switch : public Strategy {
  protected:
   DictStruct<long, Ref<Strategy>> strats;
 
  public:
-  Stg_Meta_Oscillator_Switch(StgParams &_sparams, TradeParams &_tparams, ChartParams &_cparams, string _name = "")
+  Stg_Meta_Signal_Switch(StgParams &_sparams, TradeParams &_tparams, ChartParams &_cparams, string _name = "")
       : Strategy(_sparams, _tparams, _cparams, _name) {}
 
-  static Stg_Meta_Oscillator_Switch *Init(ENUM_TIMEFRAMES _tf = NULL, EA *_ea = NULL) {
+  static Stg_Meta_Signal_Switch *Init(ENUM_TIMEFRAMES _tf = NULL, EA *_ea = NULL) {
     // Initialize strategy initial values.
-    Stg_Meta_Oscillator_Switch_Params_Defaults stg_meta_oscillator_switch_defaults;
+    Stg_Meta_Signal_Switch_Params_Defaults stg_meta_oscillator_switch_defaults;
     StgParams _stg_params(stg_meta_oscillator_switch_defaults);
     // Initialize Strategy instance.
     ChartParams _cparams(_tf, _Symbol);
     TradeParams _tparams;
-    Strategy *_strat = new Stg_Meta_Oscillator_Switch(_stg_params, _tparams, _cparams, "(Meta) Oscillator Switch");
+    Strategy *_strat = new Stg_Meta_Signal_Switch(_stg_params, _tparams, _cparams, "(Meta) Oscillator Switch");
     return _strat;
   }
 
