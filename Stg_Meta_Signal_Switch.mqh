@@ -7,41 +7,11 @@
 #ifndef STG_META_SIGNAL_SWITCH_MQH
 #define STG_META_SIGNAL_SWITCH_MQH
 
-enum ENUM_STG_META_SIGNAL_SWITCH_TYPE {
-  STG_META_SIGNAL_SWITCH_TYPE_0_NONE = 0,  // (None)
-  STG_META_SIGNAL_SWITCH_TYPE_AC,          // AC: Accelerator/Decelerator
-  STG_META_SIGNAL_SWITCH_TYPE_AD,          // AD: Accumulation/Distribution
-  STG_META_SIGNAL_SWITCH_TYPE_AO,          // AO: Awesome
-  STG_META_SIGNAL_SWITCH_TYPE_ATR,         // ATR
-  STG_META_SIGNAL_SWITCH_TYPE_BEARS,       // Bears Power
-  STG_META_SIGNAL_SWITCH_TYPE_BULLS,       // Bulls Power
-  STG_META_SIGNAL_SWITCH_TYPE_BWMFI,       // BWMFI
-  STG_META_SIGNAL_SWITCH_TYPE_CCI,         // CCI
-  STG_META_SIGNAL_SWITCH_TYPE_CHO,         // CHO: Chaikin
-  STG_META_SIGNAL_SWITCH_TYPE_CHV,         // CHV: Chaikin Volatility
-  STG_META_SIGNAL_SWITCH_TYPE_DEMARKER,    // DeMarker
-  STG_META_SIGNAL_SWITCH_TYPE_MFI,         // MFI
-  STG_META_SIGNAL_SWITCH_TYPE_MOM,         // MOM: Momentum
-  STG_META_SIGNAL_SWITCH_TYPE_OBV,         // OBV: On Balance Volume
-  STG_META_SIGNAL_SWITCH_TYPE_PVT,         // PVT: Price and Volume Trend
-  STG_META_SIGNAL_SWITCH_TYPE_ROC,         // ROC: Rate of Change
-  STG_META_SIGNAL_SWITCH_TYPE_RSI,         // RSI
-  STG_META_SIGNAL_SWITCH_TYPE_STDDEV,      // StdDev: Standard Deviation
-  STG_META_SIGNAL_SWITCH_TYPE_STOCH,       // Stochastic
-  STG_META_SIGNAL_SWITCH_TYPE_TRIX,        // TRIX: Triple Exponential Average
-  STG_META_SIGNAL_SWITCH_TYPE_UO,          // UO: Ultimate Oscillator
-  STG_META_SIGNAL_SWITCH_TYPE_WAD,         // WAD: Larry Williams' Accumulation/Distribution
-  STG_META_SIGNAL_SWITCH_TYPE_WPR,         // WPR
-  STG_META_SIGNAL_SWITCH_TYPE_VOL,         // VOL: Volumes
-};
-
 // User input params.
 INPUT2_GROUP("Meta Signal Switch strategy: main params");
-INPUT2 ENUM_STG_META_SIGNAL_SWITCH_TYPE Meta_Signal_Switch_Type =
-    STG_META_SIGNAL_SWITCH_TYPE_STDDEV;                                  // Oscillator type
-INPUT2 ENUM_STRATEGY Meta_Signal_Switch_Strategy_Dn = STRAT_OSCILLATOR;  // Strategy when oscillator goes down
-INPUT2 ENUM_STRATEGY Meta_Signal_Switch_Strategy_Up = STRAT_CHAIKIN;     // Strategy when oscillator goes up
-INPUT2 ENUM_TIMEFRAMES Meta_Signal_Switch_Tf = PERIOD_D1;                // Timeframe for oscillator
+INPUT2 ENUM_STRATEGY Meta_Signal_Switch_Strategy_Main = STRAT_OSCILLATOR;          // Main strategy
+INPUT2 ENUM_STRATEGY Meta_Signal_Switch_Strategy_Signal2Check = STRAT_OSCILLATOR;  // Strategy to check signal
+INPUT2 ENUM_STRATEGY Meta_Signal_Switch_Strategy_Signal2Switch = STRAT_CHAIKIN;    // Strategy to run on signal
 INPUT2_GROUP("Meta Signal Switch strategy: common params");
 INPUT2 float Meta_Signal_Switch_LotSize = 0;                // Lot size
 INPUT2 int Meta_Signal_Switch_SignalOpenMethod = 0;         // Signal open method
@@ -52,7 +22,7 @@ INPUT2 int Meta_Signal_Switch_SignalOpenBoostMethod = 0;    // Signal open boost
 INPUT2 int Meta_Signal_Switch_SignalCloseMethod = 0;        // Signal close method
 INPUT2 int Meta_Signal_Switch_SignalCloseSwitch = 32;       // Signal close filter (-127-127)
 INPUT2 float Meta_Signal_Switch_SignalCloseLevel = 0;       // Signal close level
-INPUT2 int Meta_Signal_Switch_PriceStopMethod = 0;          // Price limit method
+INPUT2 int Meta_Signal_Switch_PriceStopMethod = 1;          // Price limit method
 INPUT2 float Meta_Signal_Switch_PriceStopLevel = 2;         // Price limit level
 INPUT2 int Meta_Signal_Switch_TickSwitchMethod = 32;        // Tick filter method (0-255)
 INPUT2 float Meta_Signal_Switch_MaxSpread = 4.0;            // Max spread to trade (in pips)
@@ -60,122 +30,6 @@ INPUT2 short Meta_Signal_Switch_Shift = 0;                  // Shift
 INPUT2 float Meta_Signal_Switch_OrderCloseLoss = 200;       // Order close loss
 INPUT2 float Meta_Signal_Switch_OrderCloseProfit = 200;     // Order close profit
 INPUT2 int Meta_Signal_Switch_OrderCloseTime = 2880;        // Order close time in mins (>0) or bars (<0)
-INPUT3_GROUP("Meta Signal Switch strategy: AC oscillator params");
-INPUT3 int Meta_Signal_Switch_Indi_AC_Shift = 0;                                      // Shift
-INPUT3 ENUM_IDATA_SOURCE_TYPE Meta_Signal_Switch_Indi_AC_SourceType = IDATA_BUILTIN;  // Source type
-INPUT3_GROUP("Meta Signal Switch strategy: AD oscillator params");
-INPUT3 int Meta_Signal_Switch_Indi_AD_Shift = 0;                                      // Shift
-INPUT3 ENUM_IDATA_SOURCE_TYPE Meta_Signal_Switch_Indi_AD_SourceType = IDATA_BUILTIN;  // Source type
-INPUT3_GROUP("Meta Signal Switch strategy: ATR oscillator params");
-INPUT3 int Meta_Signal_Switch_Indi_ATR_Period = 13;                                    // Period
-INPUT3 int Meta_Signal_Switch_Indi_ATR_Shift = 0;                                      // Shift
-INPUT3 ENUM_IDATA_SOURCE_TYPE Meta_Signal_Switch_Indi_ATR_SourceType = IDATA_BUILTIN;  // Source type
-INPUT3_GROUP("Meta Signal Switch strategy: Awesome oscillator params");
-INPUT3 int Meta_Signal_Switch_Indi_Awesome_Shift = 0;                                      // Shift
-INPUT3 ENUM_IDATA_SOURCE_TYPE Meta_Signal_Switch_Indi_Awesome_SourceType = IDATA_BUILTIN;  // Source type
-INPUT3_GROUP("Meta Signal Switch strategy: BearsPower oscillator params");
-INPUT3 int Meta_Signal_Switch_Indi_BearsPower_Period = 30;                                    // Period
-INPUT3 ENUM_APPLIED_PRICE Meta_Signal_Switch_Indi_BearsPower_Applied_Price = PRICE_CLOSE;     // Applied Price
-INPUT3 int Meta_Signal_Switch_Indi_BearsPower_Shift = 0;                                      // Shift
-INPUT3 ENUM_IDATA_SOURCE_TYPE Meta_Signal_Switch_Indi_BearsPower_SourceType = IDATA_BUILTIN;  // Source type
-INPUT3_GROUP("Meta Signal Switch strategy: BullsPower oscillator params");
-INPUT3 int Meta_Signal_Switch_Indi_BullsPower_Period = 30;                                    // Period
-INPUT3 ENUM_APPLIED_PRICE Meta_Signal_Switch_Indi_BullsPower_Applied_Price = PRICE_CLOSE;     // Applied Price
-INPUT3 int Meta_Signal_Switch_Indi_BullsPower_Shift = 0;                                      // Shift
-INPUT3 ENUM_IDATA_SOURCE_TYPE Meta_Signal_Switch_Indi_BullsPower_SourceType = IDATA_BUILTIN;  // Source type
-INPUT3_GROUP("Meta Signal Switch strategy: BWMFI oscillator params");
-INPUT3 int Meta_Signal_Switch_Indi_BWMFI_Shift = 1;                                      // Shift
-INPUT3 ENUM_IDATA_SOURCE_TYPE Meta_Signal_Switch_Indi_BWMFI_SourceType = IDATA_BUILTIN;  // Source type
-INPUT3_GROUP("Meta Signal Switch strategy: CCI oscillator params");
-INPUT3 int Meta_Signal_Switch_Indi_CCI_Period = 20;                                    // Period
-INPUT3 ENUM_APPLIED_PRICE Meta_Signal_Switch_Indi_CCI_Applied_Price = PRICE_TYPICAL;   // Applied Price
-INPUT3 int Meta_Signal_Switch_Indi_CCI_Shift = 0;                                      // Shift
-INPUT3 ENUM_IDATA_SOURCE_TYPE Meta_Signal_Switch_Indi_CCI_SourceType = IDATA_BUILTIN;  // Source type
-INPUT3_GROUP("Meta Signal Switch strategy: Chaikin oscillator params");
-INPUT3 int Meta_Signal_Switch_Indi_CHO_InpFastMA = 10;                                 // Fast EMA period
-INPUT3 int Meta_Signal_Switch_Indi_CHO_InpSlowMA = 30;                                 // Slow MA period
-INPUT3 ENUM_MA_METHOD Meta_Signal_Switch_Indi_CHO_InpSmoothMethod = MODE_SMMA;         // MA method
-INPUT3 ENUM_APPLIED_VOLUME Meta_Signal_Switch_Indi_CHO_InpVolumeType = VOLUME_TICK;    // Volumes
-INPUT3 int Meta_Signal_Switch_Indi_CHO_Shift = 0;                                      // Shift
-INPUT3 ENUM_IDATA_SOURCE_TYPE Meta_Signal_Switch_Indi_CHO_SourceType = IDATA_BUILTIN;  // Source type
-INPUT3_GROUP("Meta Signal Switch strategy: Chaikin Volatility oscillator params");
-INPUT3 unsigned int Meta_Signal_Switch_Indi_CHV_Smooth_Period;                         // Smooth period
-INPUT3 unsigned int Meta_Signal_Switch_Indi_CHV_Period;                                // Period
-INPUT3 ENUM_CHV_SMOOTH_METHOD Meta_Signal_Switch_Indi_CHV_Smooth_Method;               // Smooth method
-INPUT3 int Meta_Signal_Switch_Indi_CHV_Shift = 0;                                      // Shift
-INPUT3 ENUM_IDATA_SOURCE_TYPE Meta_Signal_Switch_Indi_CHV_SourceType = IDATA_BUILTIN;  // Source type
-INPUT3_GROUP("Meta Signal Switch strategy: DeMarker indicator params");
-INPUT3 int Meta_Signal_Switch_Indi_DeMarker_Period = 23;                                    // Period
-INPUT3 int Meta_Signal_Switch_Indi_DeMarker_Shift = 0;                                      // Shift
-INPUT3 ENUM_IDATA_SOURCE_TYPE Meta_Signal_Switch_Indi_DeMarker_SourceType = IDATA_BUILTIN;  // Source type
-INPUT3_GROUP("Meta Signal Switch strategy: MFI oscillator params");
-INPUT3 int Meta_Signal_Switch_Indi_MFI_MA_Period = 22;                                           // MA Period
-INPUT3 ENUM_APPLIED_VOLUME Meta_Signal_Switch_Indi_MFI_Applied_Volume = (ENUM_APPLIED_VOLUME)0;  // Applied volume.
-INPUT3 int Meta_Signal_Switch_Indi_MFI_Shift = 0;                                                // Shift
-INPUT3 ENUM_IDATA_SOURCE_TYPE Meta_Signal_Switch_Indi_MFI_SourceType = IDATA_BUILTIN;            // Source type
-INPUT3_GROUP("Meta Signal Switch strategy: Momentum oscillator params");
-INPUT3 int Meta_Signal_Switch_Indi_Momentum_Period = 12;                                    // Averaging period
-INPUT3 ENUM_APPLIED_PRICE Meta_Signal_Switch_Indi_Momentum_Applied_Price = PRICE_CLOSE;     // Applied Price
-INPUT3 int Meta_Signal_Switch_Indi_Momentum_Shift = 0;                                      // Shift
-INPUT3 ENUM_IDATA_SOURCE_TYPE Meta_Signal_Switch_Indi_Momentum_SourceType = IDATA_BUILTIN;  // Source type
-INPUT3_GROUP("Meta Signal Switch strategy: OBV oscillator params");
-INPUT3 ENUM_APPLIED_PRICE Meta_Signal_Switch_Indi_OBV_Applied_Price = PRICE_CLOSE;     // Applied Price
-INPUT3 int Meta_Signal_Switch_Indi_OBV_Shift = 1;                                      // Shift
-INPUT3 ENUM_IDATA_SOURCE_TYPE Meta_Signal_Switch_Indi_OBV_SourceType = IDATA_BUILTIN;  // Source type
-INPUT3_GROUP("Meta Signal Switch strategy: PVT oscillator params");
-INPUT3 ENUM_APPLIED_VOLUME Meta_Signal_Switch_Indi_PVT_InpVolumeType = VOLUME_TICK;    // Volumes
-INPUT3 int Meta_Signal_Switch_Indi_PVT_Shift = 0;                                      // Shift
-INPUT3 ENUM_IDATA_SOURCE_TYPE Meta_Signal_Switch_Indi_PVT_SourceType = IDATA_BUILTIN;  // Source type
-INPUT3_GROUP("Meta Signal Switch strategy: ROC oscillator params");
-INPUT3 int Meta_Signal_Switch_Indi_ROC_Period = 16;                                    // Period
-INPUT3 ENUM_APPLIED_PRICE Meta_Signal_Switch_Indi_ROC_Applied_Price = PRICE_WEIGHTED;  // Applied Price
-INPUT3 int Meta_Signal_Switch_Indi_ROC_Shift = 0;                                      // Shift
-INPUT3 ENUM_IDATA_SOURCE_TYPE Meta_Signal_Switch_Indi_ROC_SourceType = IDATA_BUILTIN;  // Source type
-INPUT3_GROUP("Meta Signal Switch strategy: RSI oscillator params");
-INPUT3 int Meta_Signal_Switch_Indi_RSI_Period = 16;                                    // Period
-INPUT3 ENUM_APPLIED_PRICE Meta_Signal_Switch_Indi_RSI_Applied_Price = PRICE_WEIGHTED;  // Applied Price
-INPUT3 int Meta_Signal_Switch_Indi_RSI_Shift = 0;                                      // Shift
-INPUT3 ENUM_IDATA_SOURCE_TYPE Meta_Signal_Switch_Indi_RSI_SourceType = IDATA_BUILTIN;  // Source type
-INPUT3_GROUP("Meta Signal Switch strategy: StdDev oscillator params");
-INPUT3 int Meta_Signal_Switch_Indi_StdDev_MA_Period = 24;                                 // Period
-INPUT3 int Meta_Signal_Switch_Indi_StdDev_MA_Shift = 0;                                   // MA Shift
-INPUT3 ENUM_MA_METHOD Meta_Signal_Switch_Indi_StdDev_MA_Method = (ENUM_MA_METHOD)3;       // MA Method
-INPUT3 ENUM_APPLIED_PRICE Meta_Signal_Switch_Indi_StdDev_Applied_Price = PRICE_WEIGHTED;  // Applied Price
-INPUT3 int Meta_Signal_Switch_Indi_StdDev_Shift = 0;                                      // Shift
-INPUT3 ENUM_IDATA_SOURCE_TYPE Meta_Signal_Switch_Indi_StdDev_SourceType = IDATA_BUILTIN;  // Source type
-INPUT3_GROUP("Meta Signal Switch strategy: Stochastic oscillator params");
-INPUT3 int Meta_Signal_Switch_Indi_Stochastic_KPeriod = 8;                      // K line period
-INPUT3 int Meta_Signal_Switch_Indi_Stochastic_DPeriod = 12;                     // D line period
-INPUT3 int Meta_Signal_Switch_Indi_Stochastic_Slowing = 12;                     // Slowing
-INPUT3 ENUM_MA_METHOD Meta_Signal_Switch_Indi_Stochastic_MA_Method = MODE_EMA;  // Moving Average method
-INPUT3 ENUM_STO_PRICE Meta_Signal_Switch_Indi_Stochastic_Price_Field = 0;  // Price (0 - Low/High or 1 - Close/Close)
-INPUT3 int Meta_Signal_Switch_Indi_Stochastic_Shift = 0;                   // Shift
-INPUT3 ENUM_IDATA_SOURCE_TYPE Meta_Signal_Switch_Indi_Stochastic_SourceType = IDATA_BUILTIN;  // Source type
-INPUT3_GROUP("Meta Signal Switch strategy: TRIX oscillator params");
-INPUT3 int Meta_Signal_Switch_Indi_TRIX_InpPeriodEMA = 14;                              // EMA period
-INPUT3 ENUM_APPLIED_PRICE Meta_Signal_Switch_Indi_TRIX_Applied_Price = PRICE_WEIGHTED;  // Applied Price
-INPUT3 int Meta_Signal_Switch_Indi_TRIX_Shift = 0;                                      // Shift
-INPUT3 ENUM_IDATA_SOURCE_TYPE Meta_Signal_Switch_Indi_TRIX_SourceType = IDATA_BUILTIN;  // Source type
-INPUT3_GROUP("Meta Signal Switch strategy: Ultimate oscillator params");
-INPUT3 int Meta_Signal_Switch_Indi_UO_InpFastPeriod = 7;                              // Fast ATR period
-INPUT3 int Meta_Signal_Switch_Indi_UO_InpMiddlePeriod = 14;                           // Middle ATR period
-INPUT3 int Meta_Signal_Switch_Indi_UO_InpSlowPeriod = 28;                             // Slow ATR period
-INPUT3 int Meta_Signal_Switch_Indi_UO_InpFastK = 4;                                   // Fast K
-INPUT3 int Meta_Signal_Switch_Indi_UO_InpMiddleK = 2;                                 // Middle K
-INPUT3 int Meta_Signal_Switch_Indi_UO_InpSlowK = 1;                                   // Slow K
-INPUT3 int Meta_Signal_Switch_Indi_UO_Shift = 0;                                      // Shift
-INPUT3 ENUM_IDATA_SOURCE_TYPE Meta_Signal_Switch_Indi_UO_SourceType = IDATA_BUILTIN;  // Source type
-INPUT3_GROUP("Meta Signal Switch strategy: Williams' Accumulation/Distribution oscillator params");
-INPUT3 int Meta_Signal_Switch_Indi_WAD_Shift = 0;                                      // Shift
-INPUT3 ENUM_IDATA_SOURCE_TYPE Meta_Signal_Switch_Indi_WAD_SourceType = IDATA_BUILTIN;  // Source type
-INPUT3_GROUP("Meta Signal Switch strategy: WPR oscillator params");
-INPUT3 int Meta_Signal_Switch_Indi_WPR_Period = 18;                                    // Period
-INPUT3 int Meta_Signal_Switch_Indi_WPR_Shift = 0;                                      // Shift
-INPUT3 ENUM_IDATA_SOURCE_TYPE Meta_Signal_Switch_Indi_WPR_SourceType = IDATA_BUILTIN;  // Source type
-INPUT3_GROUP("Meta Signal Switch strategy: Volumes oscillator params");
-INPUT3 ENUM_APPLIED_VOLUME Meta_Signal_Switch_Indi_VOL_InpVolumeType = VOLUME_TICK;    // Volumes
-INPUT3 int Meta_Signal_Switch_Indi_VOL_Shift = 0;                                      // Shift
-INPUT3 ENUM_IDATA_SOURCE_TYPE Meta_Signal_Switch_Indi_VOL_SourceType = IDATA_BUILTIN;  // Source type
 
 // Structs.
 // Defines struct with default user strategy values.
@@ -219,234 +73,9 @@ class Stg_Meta_Signal_Switch : public Strategy {
    */
   void OnInit() {
     // Initialize strategies.
-    StrategyAdd(::Meta_Signal_Switch_Strategy_Dn, 0);
-    StrategyAdd(::Meta_Signal_Switch_Strategy_Up, 1);
-    // Initialize indicators.
-    switch (::Meta_Signal_Switch_Type) {
-      case STG_META_SIGNAL_SWITCH_TYPE_AC:  // AC
-      {
-        IndiACParams _indi_params(::Meta_Signal_Switch_Indi_AC_Shift);
-        _indi_params.SetDataSourceType(Meta_Signal_Switch_Indi_AC_SourceType);
-        _indi_params.SetTf(::Meta_Signal_Switch_Tf);
-        SetIndicator(new Indi_AC(_indi_params), ::Meta_Signal_Switch_Type);
-        break;
-      }
-      case STG_META_SIGNAL_SWITCH_TYPE_AD:  // AD
-      {
-        IndiADParams _indi_params(::Meta_Signal_Switch_Indi_AD_Shift);
-        _indi_params.SetDataSourceType(Meta_Signal_Switch_Indi_AD_SourceType);
-        _indi_params.SetTf(::Meta_Signal_Switch_Tf);
-        SetIndicator(new Indi_AD(_indi_params), ::Meta_Signal_Switch_Type);
-        break;
-      }
-      case STG_META_SIGNAL_SWITCH_TYPE_AO:  // AO
-      {
-        IndiAOParams _indi_params(::Meta_Signal_Switch_Indi_Awesome_Shift);
-        _indi_params.SetDataSourceType(Meta_Signal_Switch_Indi_Awesome_SourceType);
-        _indi_params.SetTf(::Meta_Signal_Switch_Tf);
-        SetIndicator(new Indi_AO(_indi_params), ::Meta_Signal_Switch_Type);
-        break;
-      }
-      case STG_META_SIGNAL_SWITCH_TYPE_ATR:  // ATR
-      {
-        IndiATRParams _indi_params(::Meta_Signal_Switch_Indi_ATR_Period, ::Meta_Signal_Switch_Indi_ATR_Shift);
-        _indi_params.SetDataSourceType(Meta_Signal_Switch_Indi_ATR_SourceType);
-        _indi_params.SetTf(::Meta_Signal_Switch_Tf);
-        SetIndicator(new Indi_ATR(_indi_params), ::Meta_Signal_Switch_Type);
-        break;
-      }
-      case STG_META_SIGNAL_SWITCH_TYPE_BEARS:  // Bears
-      {
-        IndiBearsPowerParams _indi_params(::Meta_Signal_Switch_Indi_BearsPower_Period,
-                                          ::Meta_Signal_Switch_Indi_BearsPower_Applied_Price,
-                                          ::Meta_Signal_Switch_Indi_BearsPower_Shift);
-        _indi_params.SetDataSourceType(Meta_Signal_Switch_Indi_BearsPower_SourceType);
-        _indi_params.SetTf(::Meta_Signal_Switch_Tf);
-        SetIndicator(new Indi_BearsPower(_indi_params), ::Meta_Signal_Switch_Type);
-        break;
-      }
-      case STG_META_SIGNAL_SWITCH_TYPE_BULLS:  // Bulls
-      {
-        IndiBullsPowerParams _indi_params(::Meta_Signal_Switch_Indi_BullsPower_Period,
-                                          ::Meta_Signal_Switch_Indi_BullsPower_Applied_Price,
-                                          ::Meta_Signal_Switch_Indi_BullsPower_Shift);
-        _indi_params.SetDataSourceType(Meta_Signal_Switch_Indi_BullsPower_SourceType);
-        _indi_params.SetTf(::Meta_Signal_Switch_Tf);
-        SetIndicator(new Indi_BullsPower(_indi_params), ::Meta_Signal_Switch_Type);
-        break;
-      }
-      case STG_META_SIGNAL_SWITCH_TYPE_BWMFI:  // BWMFI
-      {
-        IndiBWIndiMFIParams _indi_params(::Meta_Signal_Switch_Indi_BWMFI_Shift);
-        _indi_params.SetDataSourceType(Meta_Signal_Switch_Indi_BWMFI_SourceType);
-        _indi_params.SetTf(::Meta_Signal_Switch_Tf);
-        SetIndicator(new Indi_BWMFI(_indi_params), ::Meta_Signal_Switch_Type);
-        break;
-      }
-      case STG_META_SIGNAL_SWITCH_TYPE_CCI:  // CCI
-      {
-        IndiCCIParams _indi_params(::Meta_Signal_Switch_Indi_CCI_Period, ::Meta_Signal_Switch_Indi_CCI_Applied_Price,
-                                   ::Meta_Signal_Switch_Indi_CCI_Shift);
-        _indi_params.SetDataSourceType(Meta_Signal_Switch_Indi_CCI_SourceType);
-        _indi_params.SetTf(::Meta_Signal_Switch_Tf);
-        SetIndicator(new Indi_CCI(_indi_params), ::Meta_Signal_Switch_Type);
-        break;
-      }
-      case STG_META_SIGNAL_SWITCH_TYPE_CHO:  // Chaikin (CHO)
-      {
-        IndiCHOParams _indi_params(::Meta_Signal_Switch_Indi_CHO_InpFastMA, ::Meta_Signal_Switch_Indi_CHO_InpSlowMA,
-                                   ::Meta_Signal_Switch_Indi_CHO_InpSmoothMethod,
-                                   ::Meta_Signal_Switch_Indi_CHO_InpVolumeType, ::Meta_Signal_Switch_Indi_CHO_Shift);
-        _indi_params.SetDataSourceType(::Meta_Signal_Switch_Indi_CHO_SourceType);
-        _indi_params.SetTf(::Meta_Signal_Switch_Tf);
-        SetIndicator(new Indi_CHO(_indi_params), ::Meta_Signal_Switch_Type);
-        break;
-      }
-      case STG_META_SIGNAL_SWITCH_TYPE_CHV:  // Chaikin Volatility (CHV)
-      {
-        IndiCHVParams _indi_params(::Meta_Signal_Switch_Indi_CHV_Smooth_Period, ::Meta_Signal_Switch_Indi_CHV_Period,
-                                   ::Meta_Signal_Switch_Indi_CHV_Smooth_Method, ::Meta_Signal_Switch_Indi_CHV_Shift);
-        _indi_params.SetDataSourceType(::Meta_Signal_Switch_Indi_CHV_SourceType);
-        _indi_params.SetTf(::Meta_Signal_Switch_Tf);
-        SetIndicator(new Indi_CHV(_indi_params), ::Meta_Signal_Switch_Type);
-        break;
-      }
-      case STG_META_SIGNAL_SWITCH_TYPE_DEMARKER:  // DeMarker
-      {
-        IndiDeMarkerParams _indi_params(::Meta_Signal_Switch_Indi_DeMarker_Period,
-                                        ::Meta_Signal_Switch_Indi_DeMarker_Shift);
-        _indi_params.SetDataSourceType(Meta_Signal_Switch_Indi_DeMarker_SourceType);
-        _indi_params.SetTf(::Meta_Signal_Switch_Tf);
-        SetIndicator(new Indi_DeMarker(_indi_params), ::Meta_Signal_Switch_Type);
-        break;
-      }
-      case STG_META_SIGNAL_SWITCH_TYPE_MFI:  // MFI
-      {
-        IndiMFIParams _indi_params(::Meta_Signal_Switch_Indi_MFI_MA_Period,
-                                   ::Meta_Signal_Switch_Indi_MFI_Applied_Volume, ::Meta_Signal_Switch_Indi_MFI_Shift);
-        _indi_params.SetDataSourceType(::Meta_Signal_Switch_Indi_MFI_SourceType);
-        _indi_params.SetTf(::Meta_Signal_Switch_Tf);
-        SetIndicator(new Indi_MFI(_indi_params), ::Meta_Signal_Switch_Type);
-        break;
-      }
-      case STG_META_SIGNAL_SWITCH_TYPE_MOM:  // MOM
-      {
-        IndiMomentumParams _indi_params(::Meta_Signal_Switch_Indi_Momentum_Period,
-                                        ::Meta_Signal_Switch_Indi_Momentum_Applied_Price,
-                                        ::Meta_Signal_Switch_Indi_Momentum_Shift);
-        _indi_params.SetDataSourceType(::Meta_Signal_Switch_Indi_Momentum_SourceType);
-        _indi_params.SetTf(::Meta_Signal_Switch_Tf);
-        SetIndicator(new Indi_Momentum(_indi_params), ::Meta_Signal_Switch_Type);
-        break;
-      }
-      case STG_META_SIGNAL_SWITCH_TYPE_OBV:  // OBV
-      {
-        IndiOBVParams _indi_params(::Meta_Signal_Switch_Indi_OBV_Applied_Price, ::Meta_Signal_Switch_Indi_OBV_Shift);
-        _indi_params.SetDataSourceType(::Meta_Signal_Switch_Indi_OBV_SourceType);
-        _indi_params.SetTf(::Meta_Signal_Switch_Tf);
-        SetIndicator(new Indi_OBV(_indi_params), ::Meta_Signal_Switch_Type);
-        break;
-      }
-      case STG_META_SIGNAL_SWITCH_TYPE_PVT:  // PVT
-      {
-        IndiPriceVolumeTrendParams _indi_params(::Meta_Signal_Switch_Indi_PVT_InpVolumeType,
-                                                ::Meta_Signal_Switch_Indi_PVT_Shift);
-        _indi_params.SetDataSourceType(::Meta_Signal_Switch_Indi_PVT_SourceType);
-        _indi_params.SetTf(::Meta_Signal_Switch_Tf);
-        SetIndicator(new Indi_PriceVolumeTrend(_indi_params), ::Meta_Signal_Switch_Type);
-        break;
-      }
-      case STG_META_SIGNAL_SWITCH_TYPE_ROC:  // ROC
-      {
-        IndiRateOfChangeParams _indi_params(::Meta_Signal_Switch_Indi_ROC_Period,
-                                            ::Meta_Signal_Switch_Indi_ROC_Applied_Price,
-                                            ::Meta_Signal_Switch_Indi_ROC_Shift);
-        _indi_params.SetDataSourceType(::Meta_Signal_Switch_Indi_ROC_SourceType);
-        _indi_params.SetTf(::Meta_Signal_Switch_Tf);
-        SetIndicator(new Indi_RateOfChange(_indi_params), ::Meta_Signal_Switch_Type);
-        break;
-      }
-      case STG_META_SIGNAL_SWITCH_TYPE_RSI:  // RSI
-      {
-        IndiRSIParams _indi_params(::Meta_Signal_Switch_Indi_RSI_Period, ::Meta_Signal_Switch_Indi_RSI_Applied_Price,
-                                   ::Meta_Signal_Switch_Indi_RSI_Shift);
-        _indi_params.SetDataSourceType(::Meta_Signal_Switch_Indi_RSI_SourceType);
-        _indi_params.SetTf(::Meta_Signal_Switch_Tf);
-        SetIndicator(new Indi_RSI(_indi_params), ::Meta_Signal_Switch_Type);
-        break;
-      }
-      case STG_META_SIGNAL_SWITCH_TYPE_STDDEV:  // StdDev
-      {
-        IndiStdDevParams _indi_params(
-            ::Meta_Signal_Switch_Indi_StdDev_MA_Period, ::Meta_Signal_Switch_Indi_StdDev_MA_Shift,
-            ::Meta_Signal_Switch_Indi_StdDev_MA_Method, ::Meta_Signal_Switch_Indi_StdDev_Applied_Price,
-            ::Meta_Signal_Switch_Indi_StdDev_Shift);
-        _indi_params.SetDataSourceType(::Meta_Signal_Switch_Indi_StdDev_SourceType);
-        _indi_params.SetTf(::Meta_Signal_Switch_Tf);
-        SetIndicator(new Indi_StdDev(_indi_params), ::Meta_Signal_Switch_Type);
-        break;
-      }
-      case STG_META_SIGNAL_SWITCH_TYPE_STOCH:  // Stochastic
-      {
-        IndiStochParams _indi_params(
-            ::Meta_Signal_Switch_Indi_Stochastic_KPeriod, ::Meta_Signal_Switch_Indi_Stochastic_DPeriod,
-            ::Meta_Signal_Switch_Indi_Stochastic_Slowing, ::Meta_Signal_Switch_Indi_Stochastic_MA_Method,
-            ::Meta_Signal_Switch_Indi_Stochastic_Price_Field, ::Meta_Signal_Switch_Indi_Stochastic_Shift);
-        _indi_params.SetDataSourceType(::Meta_Signal_Switch_Indi_Stochastic_SourceType);
-        _indi_params.SetTf(::Meta_Signal_Switch_Tf);
-        SetIndicator(new Indi_Stochastic(_indi_params), ::Meta_Signal_Switch_Type);
-        break;
-      }
-      case STG_META_SIGNAL_SWITCH_TYPE_TRIX:  // TRIX
-      {
-        IndiTRIXParams _indi_params(::Meta_Signal_Switch_Indi_TRIX_InpPeriodEMA,
-                                    ::Meta_Signal_Switch_Indi_TRIX_Applied_Price, ::Meta_Signal_Switch_Indi_TRIX_Shift);
-        _indi_params.SetDataSourceType(::Meta_Signal_Switch_Indi_TRIX_SourceType);
-        _indi_params.SetTf(::Meta_Signal_Switch_Tf);
-        SetIndicator(new Indi_TRIX(_indi_params), ::Meta_Signal_Switch_Type);
-        break;
-      }
-      case STG_META_SIGNAL_SWITCH_TYPE_UO:  // UO
-      {
-        IndiUltimateOscillatorParams _indi_params(
-            ::Meta_Signal_Switch_Indi_UO_InpFastPeriod, ::Meta_Signal_Switch_Indi_UO_InpMiddlePeriod,
-            ::Meta_Signal_Switch_Indi_UO_InpSlowPeriod, ::Meta_Signal_Switch_Indi_UO_InpFastK,
-            ::Meta_Signal_Switch_Indi_UO_InpMiddleK, ::Meta_Signal_Switch_Indi_UO_InpSlowK,
-            ::Meta_Signal_Switch_Indi_UO_Shift);
-        _indi_params.SetDataSourceType(::Meta_Signal_Switch_Indi_UO_SourceType);
-        _indi_params.SetTf(::Meta_Signal_Switch_Tf);
-        SetIndicator(new Indi_UltimateOscillator(_indi_params), ::Meta_Signal_Switch_Type);
-        break;
-      }
-      case STG_META_SIGNAL_SWITCH_TYPE_WAD:  // Williams' AD
-      {
-        IndiWilliamsADParams _indi_params(::Meta_Signal_Switch_Indi_WAD_Shift);
-        _indi_params.SetDataSourceType(Meta_Signal_Switch_Indi_WAD_SourceType);
-        _indi_params.SetTf(::Meta_Signal_Switch_Tf);
-        SetIndicator(new Indi_WilliamsAD(_indi_params), ::Meta_Signal_Switch_Type);
-        break;
-      }
-      case STG_META_SIGNAL_SWITCH_TYPE_WPR:  // WPR
-      {
-        IndiWPRParams _indi_params(::Meta_Signal_Switch_Indi_WPR_Period, ::Meta_Signal_Switch_Indi_WPR_Shift);
-        _indi_params.SetDataSourceType(::Meta_Signal_Switch_Indi_WPR_SourceType);
-        _indi_params.SetTf(::Meta_Signal_Switch_Tf);
-        SetIndicator(new Indi_WPR(_indi_params), ::Meta_Signal_Switch_Type);
-        break;
-      }
-      case STG_META_SIGNAL_SWITCH_TYPE_VOL:  // Volumes
-      {
-        IndiVolumesParams _indi_params(::Meta_Signal_Switch_Indi_VOL_InpVolumeType,
-                                       ::Meta_Signal_Switch_Indi_VOL_Shift);
-        _indi_params.SetDataSourceType(::Meta_Signal_Switch_Indi_VOL_SourceType);
-        _indi_params.SetTf(::Meta_Signal_Switch_Tf);
-        SetIndicator(new Indi_Volumes(_indi_params), ::Meta_Signal_Switch_Type);
-        break;
-      }
-      case STG_META_SIGNAL_SWITCH_TYPE_0_NONE:  // (None)
-      default:
-        break;
-    }
+    StrategyAdd(::Meta_Signal_Switch_Strategy_Main, 0);
+    StrategyAdd(::Meta_Signal_Switch_Strategy_Signal2Check, 1);
+    StrategyAdd(::Meta_Signal_Switch_Strategy_Signal2Switch, 2);
   }
 
   /**
@@ -656,22 +285,21 @@ class Stg_Meta_Signal_Switch : public Strategy {
   /**
    * Gets strategy.
    */
-  Ref<Strategy> GetStrategy(uint _shift = 0) {
-    IndicatorBase *_indi = GetIndicator(::Meta_Signal_Switch_Type);
-    Chart *_chart = (Chart *)_indi;
-    uint _ishift = _shift;  // @fixme
-    bool _result = true;
-    // bool _result = _indi.GetFlag(INDI_ENTRY_FLAG_IS_VALID, _ishift) && _indi.GetFlag(INDI_ENTRY_FLAG_IS_VALID,
-    // _ishift + 3);
-    Ref<Strategy> _strat_ref;
-    if (!_result) {
+  Ref<Strategy> GetStrategy(ENUM_ORDER_TYPE _cmd, int _method = 0, float _level = 0.0f, int _shift = 0) {
+    bool _result_signal = true;
+    Ref<Strategy> _strat_ref = strats.GetByKey(0);
+    Ref<Strategy> _strat_signal = strats.GetByKey(1);
+    if (!_strat_signal.IsSet()) {
       // Returns false when indicator data is not valid.
       return _strat_ref;
     }
-    if (_indi.IsDecreasing(1, 0, _ishift)) {
-      _strat_ref = strats.GetByKey(0);
-    } else if (_indi.IsIncreasing(1, 0, _ishift)) {
-      _strat_ref = strats.GetByKey(1);
+    _level = _level == 0.0f ? _strat_signal.Ptr().Get<float>(STRAT_PARAM_SOL) : _level;
+    _method = _method == 0 ? _strat_signal.Ptr().Get<int>(STRAT_PARAM_SOM) : _method;
+    _shift = _shift == 0 ? _strat_signal.Ptr().Get<int>(STRAT_PARAM_SHIFT) : _shift;
+    _result_signal &= _strat_signal.Ptr().SignalOpen(_cmd, _method, _level, _shift);
+    if (_result_signal) {
+      // On signal, switch the main strategy.
+      _strat_ref = strats.GetByKey(2);
     }
     return _strat_ref;
   }
@@ -687,7 +315,7 @@ class Stg_Meta_Signal_Switch : public Strategy {
       // Ignores calculation when method is 0.
       return (float)_result;
     }
-    Ref<Strategy> _strat_ref = GetStrategy(_ishift);  // @todo: Add shift.
+    Ref<Strategy> _strat_ref = GetStrategy(_cmd, _method, _level, _ishift);  // @todo: Add shift.
     if (!_strat_ref.IsSet()) {
       // Returns false when strategy is not set.
       return false;
@@ -704,8 +332,8 @@ class Stg_Meta_Signal_Switch : public Strategy {
    * Check strategy's opening signal.
    */
   bool SignalOpen(ENUM_ORDER_TYPE _cmd, int _method, float _level = 0.0f, int _shift = 0) {
-    bool _result = ::Meta_Signal_Switch_Type != STG_META_SIGNAL_SWITCH_TYPE_0_NONE;  // && IsValidEntry(_indi, _shift);
-    Ref<Strategy> _strat_ref = GetStrategy(_shift);
+    bool _result = true;
+    Ref<Strategy> _strat_ref = GetStrategy(_cmd, _method, _level, _shift);
     if (!_strat_ref.IsSet()) {
       // Returns false when strategy is not set.
       return false;
@@ -721,8 +349,8 @@ class Stg_Meta_Signal_Switch : public Strategy {
    * Check strategy's closing signal.
    */
   bool SignalClose(ENUM_ORDER_TYPE _cmd, int _method, float _level = 0.0f, int _shift = 0) {
-    bool _result = ::Meta_Signal_Switch_Type != STG_META_SIGNAL_SWITCH_TYPE_0_NONE;  // && IsValidEntry(_indi, _shift);
-    Ref<Strategy> _strat_ref = GetStrategy(_shift);
+    bool _result = true;
+    Ref<Strategy> _strat_ref = GetStrategy(_cmd, _method, _level, _shift);
     if (!_strat_ref.IsSet()) {
       // Returns false when strategy is not set.
       return false;
