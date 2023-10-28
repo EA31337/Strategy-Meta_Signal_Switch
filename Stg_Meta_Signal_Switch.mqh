@@ -12,24 +12,24 @@ INPUT2_GROUP("Meta Signal Switch strategy: main params");
 INPUT2 ENUM_STRATEGY Meta_Signal_Switch_Strategy_Main = STRAT_OSCILLATOR_RANGE;  // Main strategy
 INPUT2 ENUM_STRATEGY Meta_Signal_Switch_Strategy_Signal2Check = STRAT_CHAIKIN;   // Strategy to check for signal
 INPUT2 ENUM_STRATEGY Meta_Signal_Switch_Strategy_Signal2Switch = STRAT_RVI;      // Strategy to run on signal
-INPUT2_GROUP("Meta Signal Switch strategy: common params");
-INPUT2 float Meta_Signal_Switch_LotSize = 0;                // Lot size
-INPUT2 int Meta_Signal_Switch_SignalOpenMethod = 0;         // Signal open method
-INPUT2 float Meta_Signal_Switch_SignalOpenLevel = 0;        // Signal open level
-INPUT2 int Meta_Signal_Switch_SignalOpenSwitchMethod = 32;  // Signal open filter method
-INPUT2 int Meta_Signal_Switch_SignalOpenSwitchTime = 3;     // Signal open filter time (0-31)
-INPUT2 int Meta_Signal_Switch_SignalOpenBoostMethod = 0;    // Signal open boost method
-INPUT2 int Meta_Signal_Switch_SignalCloseMethod = 0;        // Signal close method
-INPUT2 int Meta_Signal_Switch_SignalCloseSwitch = 32;       // Signal close filter (-127-127)
-INPUT2 float Meta_Signal_Switch_SignalCloseLevel = 0;       // Signal close level
-INPUT2 int Meta_Signal_Switch_PriceStopMethod = 1;          // Price limit method
-INPUT2 float Meta_Signal_Switch_PriceStopLevel = 2;         // Price limit level
-INPUT2 int Meta_Signal_Switch_TickSwitchMethod = 32;        // Tick filter method (0-255)
-INPUT2 float Meta_Signal_Switch_MaxSpread = 4.0;            // Max spread to trade (in pips)
-INPUT2 short Meta_Signal_Switch_Shift = 0;                  // Shift
-INPUT2 float Meta_Signal_Switch_OrderCloseLoss = 200;       // Order close loss
-INPUT2 float Meta_Signal_Switch_OrderCloseProfit = 200;     // Order close profit
-INPUT2 int Meta_Signal_Switch_OrderCloseTime = 2880;        // Order close time in mins (>0) or bars (<0)
+INPUT3_GROUP("Meta Signal Switch strategy: common params");
+INPUT3 float Meta_Signal_Switch_LotSize = 0;                // Lot size
+INPUT3 int Meta_Signal_Switch_SignalOpenMethod = 0;         // Signal open method
+INPUT3 float Meta_Signal_Switch_SignalOpenLevel = 0;        // Signal open level
+INPUT3 int Meta_Signal_Switch_SignalOpenSwitchMethod = 32;  // Signal open filter method
+INPUT3 int Meta_Signal_Switch_SignalOpenSwitchTime = 3;     // Signal open filter time (0-31)
+INPUT3 int Meta_Signal_Switch_SignalOpenBoostMethod = 0;    // Signal open boost method
+INPUT3 int Meta_Signal_Switch_SignalCloseMethod = 0;        // Signal close method
+INPUT3 int Meta_Signal_Switch_SignalCloseSwitch = 32;       // Signal close filter (-127-127)
+INPUT3 float Meta_Signal_Switch_SignalCloseLevel = 0;       // Signal close level
+INPUT3 int Meta_Signal_Switch_PriceStopMethod = 1;          // Price limit method
+INPUT3 float Meta_Signal_Switch_PriceStopLevel = 2;         // Price limit level
+INPUT3 int Meta_Signal_Switch_TickSwitchMethod = 32;        // Tick filter method (0-255)
+INPUT3 float Meta_Signal_Switch_MaxSpread = 4.0;            // Max spread to trade (in pips)
+INPUT3 short Meta_Signal_Switch_Shift = 0;                  // Shift
+INPUT3 float Meta_Signal_Switch_OrderCloseLoss = 200;       // Order close loss
+INPUT3 float Meta_Signal_Switch_OrderCloseProfit = 200;     // Order close profit
+INPUT3 int Meta_Signal_Switch_OrderCloseTime = 2880;        // Order close time in mins (>0) or bars (<0)
 
 // Structs.
 // Defines struct with default user strategy values.
