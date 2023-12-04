@@ -9,9 +9,9 @@
 
 // User input params.
 INPUT2_GROUP("Meta Signal Switch strategy: main params");
-INPUT2 ENUM_STRATEGY Meta_Signal_Switch_Strategy_Main = STRAT_OSCILLATOR_RANGE;  // Main strategy
-INPUT2 ENUM_STRATEGY Meta_Signal_Switch_Strategy_Signal2Check = STRAT_CHAIKIN;   // Strategy to check for signal
-INPUT2 ENUM_STRATEGY Meta_Signal_Switch_Strategy_Signal2Switch = STRAT_RVI;      // Strategy to run on signal
+INPUT2 ENUM_STRATEGY Meta_Signal_Switch_Strategy_Main = STRAT_RSI;              // Main strategy
+INPUT2 ENUM_STRATEGY Meta_Signal_Switch_Strategy_Signal2Check = STRAT_CHAIKIN;  // Strategy to check for signal
+INPUT2 ENUM_STRATEGY Meta_Signal_Switch_Strategy_Signal2Switch = STRAT_RVI;     // Strategy to run on signal
 INPUT3_GROUP("Meta Signal Switch strategy: common params");
 INPUT3 float Meta_Signal_Switch_LotSize = 0;                // Lot size
 INPUT3 int Meta_Signal_Switch_SignalOpenMethod = 0;         // Signal open method
